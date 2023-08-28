@@ -8,6 +8,8 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [contacts, setContacts] = useState([])
 	const [selectedContact, setSelectedContact] = useState(null);
+	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+	const [contactToDelete, setContactToDelete] = useState(null);
 	const handleEditClick = (contact) => {
 		setSelectedContact(contact);
 	  };
@@ -26,7 +28,6 @@ export const Home = () => {
 					setContacts(dataArray);
 				})
 				.catch(error => {
-					//error handling
 					console.log(error);
 				});
 		console.log(contacts);
@@ -55,7 +56,7 @@ export const Home = () => {
 				contact.id === updatedData.id ? updatedData : contact
 			  );
 			  setContacts(updatedContacts);
-			  setSelectedContact(null); // Clear the selected contact after updating
+			  setSelectedContact(null); 
 			})
 			.catch((error) => {
 			  console.log(error);
@@ -64,13 +65,16 @@ export const Home = () => {
 	  };
 
 	  const handleDeleteContact = (contactId) => {
-		// Make the DELETE request to the API endpoint to delete the contact
+		setContactToDelete(contactId);
+		setShowDeleteConfirmation(true);
+	  };
+
+	  const handleDeleteContactConfirmed = (contactId) => {
 		fetch(`https://playground.4geeks.com/apis/fake/contact/${contactId}`, {
 		  method: "DELETE",
 		})
 		  .then((resp) => resp.json())
 		  .then(() => {
-			// Remove the deleted contact from the state
 			const updatedContacts = contacts.filter((contact) => contact.id !== contactId);
 			setContacts(updatedContacts);
 		  })
@@ -78,7 +82,9 @@ export const Home = () => {
 			console.log(error);
 		  });
 	  };
-	
+	  
+	  
+
   	return(
 	<div className="container d-flex justify-content-start left-container">
 	<div className="row">
@@ -140,6 +146,26 @@ export const Home = () => {
 					</svg>
 				</button>
               </div>
+			  {showDeleteConfirmation && (
+				<div className="modal-overlay">
+					<div className="confirmation-modal">
+					<p>Are you sure you want to delete this contact?</p>
+					<button
+						onClick={() => {
+						handleDeleteContactConfirmed(contactToDelete);
+						setShowDeleteConfirmation(false);
+						}}
+					>
+						Delete
+					</button>
+					<button
+						onClick={() => setShowDeleteConfirmation(false)}
+					>
+						Cancel
+					</button>
+					</div>
+				</div>
+				)}
             </div>
             {selectedContact && (
               <div className="edit-form">
