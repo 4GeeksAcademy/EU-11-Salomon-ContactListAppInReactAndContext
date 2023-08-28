@@ -15,12 +15,12 @@ export const Demo = props => {
 		const contact = {
 			"full_name": fullName,
 			"email": fullEmail,
-			"agenda_slug": "my_super_agenda_11",
+			"agenda_slug": "saloagenda",
 			"address": fullAddress,
 			"phone": fullPhone
 		}
 		
-		fetch("https://assets.breatheco.de/apis/fake/contact/", {
+		fetch("https://playground.4geeks.com/apis/fake/contact/", {
 				method: "POST",
 				body: JSON.stringify(contact),
 				headers: {
@@ -63,7 +63,7 @@ export const Demo = props => {
                     type="text"
                     className="form-control"
                     id="fullname"
-                    placeholder="insert fullname"
+                    placeholder="Insert Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                 />
@@ -76,7 +76,7 @@ export const Demo = props => {
                     type="text"
                     className="form-control"
                     id="fullEmail"
-                    placeholder="insert fullname"
+                    placeholder="Insert Email"
                     value={fullEmail}
                     onChange={(e) => setFullEmail(e.target.value)}
                 />
@@ -89,7 +89,7 @@ export const Demo = props => {
                     type="text"
                     className="form-control"
                     id="fullPhone"
-                    placeholder="insert fullname"
+                    placeholder="Insert Phone Number"
                     value={fullPhone}
                     onChange={(e) => setFullPhone(e.target.value)}
                 />				</div>
@@ -101,7 +101,7 @@ export const Demo = props => {
                     type="text"
                     className="form-control"
                     id="fullAddress"
-                    placeholder="insert fullname"
+                    placeholder="Insert Address"
                     value={fullAddress}
                     onChange={(e) => setFullAddress(e.target.value)}
                 />
